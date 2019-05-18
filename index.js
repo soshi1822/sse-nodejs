@@ -1,19 +1,38 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
+'use strict';
+const http = require('http');
+
 class SSE {
+    /**
+     *
+     * @param {http.ServerResponse} res
+     * @param {{statusCode?: number, headers?: { [key: string]: string }}} [options]
+     */
     constructor(res, options = {}) {
         this.res = res;
         this.options = options;
         this.initialize();
     }
     initialize() {
-        this.res.writeHead(this.options.statusCode || 200, Object.assign({
-            'Content-Type': 'text/event-stream',
-            'Cache-Control': 'no-cache',
-            Connection: 'keep-alive'
-        }, this.options.headers));
+        this.res.writeHead(
+            this.options.statusCode || 200,
+            Object.assign(
+                {
+                    'Content-Type': 'text/event-stream',
+                    'Cache-Control': 'no-cache',
+                    Connection: 'keep-alive'
+                },
+                this.options.headers
+            )
+        );
         this.res.write('\n');
     }
+    /**
+     *
+     * @param {{id?: string | number, event?: string | SSESendOptions, retry?: string, data?: string | object | Array<any>} | string} event
+     * @param {string | object | Array<any>} [data]
+     * @param {string | number} [id]
+     * @param {string} [retry]
+     */
     send(event, data, id, retry) {
         const options = {
             data: data,

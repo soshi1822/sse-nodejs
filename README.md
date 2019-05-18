@@ -5,7 +5,7 @@ Node.JS の標準モジュール http を使用し、SSE を実現する簡単�
 ## Usage
 
 ```
-const SSE = require('sse');
+const SSE = require('sse-nodejs');
 const http = require('http');
 
 const connection = [];
@@ -13,6 +13,7 @@ const connection = [];
 http.createServer((req, res) => {
     var sse = new SSE(res);
 
+    connection.push(sse);
     res.on('close', ()=> {
         connection.splice(connection.indexOf(sse), 1);
         sse.close();
