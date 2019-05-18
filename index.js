@@ -74,4 +74,4 @@ class SSE {
         this.res.end();
     }
 }
-exports.SSE = SSE;
+module.exports = SSE;
