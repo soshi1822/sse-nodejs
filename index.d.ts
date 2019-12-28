@@ -1,6 +1,6 @@
-import { ServerResponse } from 'http' ;
+import { ServerResponse } from 'http';
 
-default class {
+export default class {
   constructor(res: ServerResponse, optional?: { statusCode?: number, headers?: { [key: string]: string } })
 
   send(event: string, data: string | Object | Array<any>, id?: string | number, retry?: number): void
